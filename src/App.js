@@ -1,24 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import Username from "./components/Username";
+import ListeHobbies from "./components/ListeHobbies";
+import Photos from "./components/Photos";
+import { BrowserRouter, Route, Link } from "react-router-dom";
+import TestMaterialUI from "./components/TestMaterialUI";
+import GroupeRock from "./components/GroupeRock";
 
 function App() {
+  let nom = "Hello Madagascar";
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Link to="/">Home</Link>
+        &nbsp;
+        <Link to="/rock">Groupe Rock</Link>
+        <Link to="/ui">Test Material UI</Link>
+        &nbsp;
+        <Link to="/photos">Photos</Link>
+        &nbsp;
+        <Link to="/username">Username</Link>
+        <Route exact path="/" component={ListeHobbies}/>
+        <Route path="/ui" component={TestMaterialUI}/>
+        <Route path="/photos/:id" component={Photos}/>
+        <Route
+          path="/username"
+          component={() => <Username name="Michel" age="54" />}
+        />
+        <Route path="/rock" component={GroupeRock} />
+      </BrowserRouter>
     </div>
   );
 }
