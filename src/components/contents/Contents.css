@@ -1,0 +1,53 @@
+.button-external-link {
+    width: 35px;
+    height: 35px;
+    font-size: 0;
+    padding: 5px;
+}
+
+.button-default {
+    border-radius: 0;
+}
+.members-avatar {
+    background-color: transparent !important;
+    border: 1px solid #e6e6e6;
+}
+
+.equipement-grid {
+    width: 100%;
+    height: auto;
+}
+
+.urls-mui-list {
+    display: inline-flex;
+}
+
+.MuiList-root ul {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #fff;
+}
+
+.MuiList-root li a {
+    display: block;
+    color: #000;
+    width: 35px;
+    height: 35px;
+    float: right;
+    margin-left: 3px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    border-radius: 2px;
+    text-decoration: none;
+}
+
+.MuiList-root ul li {
+    display:inline !important;
+}
+
+/* Change the link color on hover */
+.MuiList-root li a:hover {
+    background-color: #d7d7d7;
+    color: white;
+}
