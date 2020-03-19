@@ -8,6 +8,7 @@
 .button-default {
     border-radius: 0;
 }
+
 .members-avatar {
     background-color: transparent !important;
     border: 1px solid #e6e6e6;
@@ -43,11 +44,45 @@
 }
 
 .MuiList-root ul li {
-    display:inline !important;
+    display: inline !important;
 }
 
 /* Change the link color on hover */
 .MuiList-root li a:hover {
     background-color: #d7d7d7;
     color: white;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    border: 1px solid #f5f5f5;
+    border-radius: 5px;
+    width: 100%;
+}
+
+th {
+    text-align: left;
+    border-left: 3px solid #f5f5f5;
+}
+
+td, th {
+    text-align: left;
+    padding-left: 8px;
+}
+
+tr {
+    height: 45px !important;
+}
+.span {
+    float: right;
+}
+
+
+.album-details-paper {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 16px;
 }
