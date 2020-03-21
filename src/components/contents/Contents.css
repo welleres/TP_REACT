@@ -15,8 +15,11 @@
 }
 
 .equipement-grid {
-    width: 100%;
     height: auto;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    justify-content: center;
+    /*border: 1px solid #f2f2f2;*/
 }
 
 .urls-mui-list {
@@ -74,6 +77,7 @@ td, th {
 tr {
     height: 45px !important;
 }
+
 .span {
     float: right;
 }
@@ -85,4 +89,45 @@ tr {
     border-radius: 0 !important;
     box-shadow: none !important;
     padding: 16px;
+}
+
+.member-chip {
+    margin: 2px;
+}
+
+.member-name-variation {
+    margin: 4px 0;
+}
+
+.team-item-card {
+    display: flex;
+    height: 95px;
+    min-height: 130px;
+    margin: 2px;
+}
+
+.team-item-cardmedia {
+    padding: 4px;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+a {
+    text-decoration: none;
+    color: #161c38;
+}
+
+.memberinfo-subject-paper {
+    padding: 8px;
+    margin: 8px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.memberinfo-subject-paper li {
+    text-decoration: none;
 }

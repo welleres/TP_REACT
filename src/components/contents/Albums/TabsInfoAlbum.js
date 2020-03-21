@@ -7,11 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import List from "@material-ui/core/List";
 import Grid from "@material-ui/core/Grid";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Card from "@material-ui/core/Card";
-import Urls from "../Urls";
-import groupe from "../../../data/mettalica";
 
 function TabPanel(props) {
     const {children, value, index, ...other} = props;
@@ -52,8 +49,8 @@ const useStyles = makeStyles(theme => ({
     paper: {
         padding: 5
     },
-    card :{
-        margin:5,
+    card: {
+        margin: 5,
         border: '1px solid #e6e6e6',
         borderRadius: 4
     }

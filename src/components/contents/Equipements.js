@@ -1,12 +1,11 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import metallicaData from "../../data/mettalica";
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
+import TeamItem from "./TeamItem";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import {Layout} from "../layout/Layout";
+import Toolbar from "@material-ui/core/Toolbar";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -21,37 +20,40 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function Equipements() {
+export default function Equipements(props) {
+    const {member} = props;
     const classes = useStyles();
-    const items = metallicaData.members[1].equipments[0]?.items;
 
     const item = (item, i) => {
         return (
-            <GridListTile key={i}>
-                <img src={item.img} alt={item.name} />
-                <GridListTileBar
-                    title={item.name}
-                    subtitle={<span>{item.description}</span>}
-                    actionIcon={
-                        <IconButton aria-label={`info about ${item.title}`} className={classes.icon}>
-                            <InfoIcon />
-                        </IconButton>
-                    }
-                />
-            </GridListTile>
+            <Grid item xs={4} sm={3}>
+                <TeamItem key={i} item={item}/>
+            </Grid>
         );
     };
-    if(items && items.length)
+
+    if (member.equipments)
         return (
             <div className={classes.root}>
-                <GridList className="equipement-grid">
-                    <GridListTile key="Subheader" cols={3} style={{ height: 'auto' }}>
-                        <ListSubheader component="div">{}</ListSubheader>
-                    </GridListTile>
-                    {items.map(item)}
-                </GridList>
+                {member.equipments.map((equipement, i) => {
+                    return (
+                        <Layout>
+                            <Toolbar>
+                                <Typography variant="h6" color="inherit" noWrap>
+                                    {equipement.type}
+                                </Typography>
+                            </Toolbar>
+                            <Grid className="equipement-grid" key={i} container spacing={0}>
+                                {equipement.items.map(item)}
+                            </Grid>
+                        </Layout>
+                    );
+                })}
             </div>
         );
     return <></>
 }
 
+Equipements.propTypes = {
+    member:  PropTypes.any.isRequired
+};

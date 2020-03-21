@@ -7,10 +7,7 @@ import {BrowserRouter, Route} from "react-router-dom";
 import TestMaterialUI from "./components/TestMaterialUI";
 import GroupeRock from "./components/mettalica/GroupeRock";
 import Container from "@material-ui/core/Container";
-import MemberDetails from "./components/contents/MemberDetails";
 import Toolbar from "@material-ui/core/Toolbar";
-import CameraIcon from "@material-ui/icons/PhotoCamera";
-import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
 import AlbumDetails from "./components/contents/Albums/AlbumDetails";
 
@@ -41,7 +38,6 @@ function App() {
                         component={() => <Username name="Michel" age="54"/>}
                     />
                     <Route path="/rock" component={GroupeRock}/>
-                    <Route path="/member-details-:id-:name" component={MemberDetails}/>
                     <Route path="/album-details-:id" component={AlbumDetails}/>
                 </BrowserRouter>
             </Container>

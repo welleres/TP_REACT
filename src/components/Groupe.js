@@ -16,11 +16,12 @@ class Groupe extends React.Component {
         newItem: null,
         hobbies: ["tennis", "foot"]
     };
+    link = "https://wasabi.i3s.unice.fr/search/artist/";
 
     addHobby = () => {
         const {hobbies, newItem} = this.state;
         hobbies.push(newItem);
-        this.setState({hobbies}); // écriture raccourcie de ES6 équivalent à {hobbies:hobbies}
+        this.setState({hobbies});
     };
 
     removeHobby = (hobbyToRemove) => {
@@ -53,11 +54,16 @@ class Groupe extends React.Component {
                         <Typography gutterBottom variant="h4" component="h2">
                             {groupe.name}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            {groupe.nameVariations_fold.join(" - ")}
+                        <Typography variant="span" color="textSecondary" component="h5">
+                            {groupe.genres?.join(" * ")}
+                        </Typography>
+                        <br/>
+                        <Typography variant="body" color="textPrimary" component="p">
+                            {groupe.nameVariations_fold?.join(" - ")}
                         </Typography>
                         <br/>
                         <Members title="All members"/>
+                        <hr/>
                         <Typography variant="body2" align={"justify"} color="textSecondary" component="p">
                             {groupe.dbp_abstract}
                         </Typography>

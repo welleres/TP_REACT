@@ -37,7 +37,7 @@ export default function Album(props) {
                 </Link>
                 <CardContent className={classes.cardContent}>
                     <Typography variant="span" component="p">
-                        {album.title}
+                        <Link to={`/album-details-${album._id}`}>{album.title}</Link>
                     </Typography>
                     <Typography variant="span" component="h6">
                         {info}

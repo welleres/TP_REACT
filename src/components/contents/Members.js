@@ -3,7 +3,8 @@ import {makeStyles} from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import groupe from "../../data/mettalica";
-import {useHistory} from "react-router";
+import {Layout} from "../layout/Layout";
+import MemberInfo from "./MemberInfo";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -18,29 +19,36 @@ const useStyles = makeStyles(theme => ({
 
 export default function Members(props) {
     const classes = useStyles();
-    const history = useHistory();
+    const [open, setOpen] = React.useState(false);
+    const [member, setMember] = React.useState('username@gmail.com');
 
-    const handleClick = () => {
-        console.info('You clicked the delete icon.');
-        const path = `/member-details-1-olivier-jean`;
-        console.log(path);
-        history.push(path)
+    const handleClickOpen = (e, value) => {
+        setOpen(true);
+        setMember(value);
     };
 
+    const handleClose = () => setOpen(false);
+
     const memberInfoItem = (member, i) => {
+        const memberName = member.realName ? member.realName : member.name;
+
         return (
             <Chip key={i}
-                  avatar={<Avatar className="members-avatar" alt={member.name} src={""}>{member.name[0]}</Avatar>}
+                  avatar={<Avatar className="members-avatar" alt={memberName} src={""}>{memberName[0]}</Avatar>}
                   label={member.name}
+                  title={memberName}
                   variant="outlined"
-                  onClick={handleClick}
+                  onClick={(e) => handleClickOpen(e, member)}
             />
         );
     };
 
     return (
-        <div className={classes.root}>
-            {groupe.members.map(memberInfoItem)}
-        </div>
+        <Layout>
+            <div className={classes.root}>
+                {groupe.members.map(memberInfoItem)}
+            </div>
+            <MemberInfo opening={open} member={member} onClose={handleClose}/>
+        </Layout>
     );
 }
