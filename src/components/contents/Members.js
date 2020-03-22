@@ -2,7 +2,7 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
-import groupe from "../../data/mettalica";
+import groupe from "../../data/groupe";
 import {Layout} from "../layout/Layout";
 import MemberInfo from "./MemberInfo";
 
@@ -19,8 +19,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function Members(props) {
     const classes = useStyles();
+    const [member, setMember] = React.useState({});
     const [open, setOpen] = React.useState(false);
-    const [member, setMember] = React.useState('username@gmail.com');
 
     const handleClickOpen = (e, value) => {
         setOpen(true);

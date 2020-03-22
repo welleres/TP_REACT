@@ -18,6 +18,9 @@ const useStyles = makeStyles(theme => ({
     icon: {
         color: 'rgba(255, 255, 255, 0.54)',
     },
+    textCenter:{
+        textAlign: 'center'
+    }
 }));
 
 export default function Equipements(props) {
@@ -26,34 +29,36 @@ export default function Equipements(props) {
 
     const item = (item, i) => {
         return (
-            <Grid item xs={4} sm={3}>
-                <TeamItem key={i} item={item}/>
+            <Grid key={i} item xs={12} sm={6} md={4}>
+                <TeamItem item={item}/>
             </Grid>
         );
     };
 
     if (member.equipments)
         return (
-            <div className={classes.root}>
-                {member.equipments.map((equipement, i) => {
-                    return (
-                        <Layout>
-                            <Toolbar>
-                                <Typography variant="h6" color="inherit" noWrap>
-                                    {equipement.type}
-                                </Typography>
-                            </Toolbar>
-                            <Grid className="equipement-grid" key={i} container spacing={0}>
-                                {equipement.items.map(item)}
-                            </Grid>
-                        </Layout>
-                    );
-                })}
-            </div>
+            <Layout>
+                <div className={classes.root}>
+                    {member.equipments.map((equipement, i) => {
+                        return (
+                            <Layout key={i}>
+                                <Toolbar>
+                                    <Typography variant="h6" color="inherit" noWrap>
+                                        {equipement.type}
+                                    </Typography>
+                                </Toolbar>
+                                <Grid className="equipement-grid" container spacing={0}>
+                                    {equipement.items.map(item)}
+                                </Grid>
+                            </Layout>
+                        );
+                    })}
+                </div>
+            </Layout>
         );
     return <></>
 }
 
 Equipements.propTypes = {
-    member:  PropTypes.any.isRequired
+    member: PropTypes.any.isRequired
 };

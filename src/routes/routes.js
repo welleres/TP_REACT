@@ -1,14 +1,14 @@
 import TestMaterialUI from "../components/TestMaterialUI";
 import Photos from "../components/Photos";
-import GroupeRock from "../components/mettalica/GroupeRock";
+import GroupeRock from "../components/groupe/GroupeRock";
 import {Route} from "react-router";
 import React from "react";
 
-const routes = [ {
-        id: 1,
-        path: "/ui",
-        component: TestMaterialUI
-    },
+const routes = [{
+    id: 1,
+    path: "/ui",
+    component: TestMaterialUI
+},
     {
         id: 2,
         path: "/photos/:id",
@@ -16,8 +16,8 @@ const routes = [ {
     },
     {
         id: 3,
-        path:"/rock",
-        component:GroupeRock
+        path: "/rock",
+        component: GroupeRock
     }
 ];
 

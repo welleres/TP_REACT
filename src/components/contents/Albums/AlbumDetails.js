@@ -1,53 +1,52 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import TabsInfoAlbum from "./TabsInfoAlbum";
-import groupe from "../../../data/mettalica";
-import ".././Contents.css"
-import Urls from "../Urls";
+import AllSongs from "./AllSongs";
+import groupe from "../../../data/groupe";
 import Paper from "@material-ui/core/Paper";
-import List from "@material-ui/core/List";
 import {Link} from "react-router-dom";
-
-const useStyles = makeStyles({
-    root: {
-        fullWidth: true,
-    },
-    media: {
-        // fullWidth: true,
-        height: 350
-    },
-});
+import {Layout} from "../../layout/Layout";
+import Urls from "../Urls";
 
 export default function AlbumDetails(props) {
-    const classes = useStyles();
-    const {id} = {...props.match.params};
+    const {id} = props.match.params;
     const albums = groupe.albums.filter(album => album._id === id);
     const album = albums.length ? albums[0] : {};
     const cover = album.cover ? album.cover.xl : groupe.picture.xl;
-    const info = album.publicationDate ? album.publicationDate : album.length ? album.dateRelease : album.deezerFans + " Fans";
+
+    const info = () => {
+        if (album.publicationDate)
+            return album.publicationDate;
+        if (album.dateRelease)
+            return album.dateRelease;
+        if (album.deezerFans)
+            return album.deezerFans + " fans";
+        return groupe.name;
+    };
     const sep = <span className="span">:</span>;
 
     return (
-        <>
-            <Card elevation={0} className={classes.root}>
-                <CardMedia className={classes.media}
-                           image={cover}
-                           component="img"
-                           title={album.title}
+        <Layout>
+            <Card elevation={0}>
+                <CardMedia
+                    image={cover}
+                    component="img"
+                    title={album.title}
                 />
                 <CardContent>
                     <Paper className={"album-details-paper"}>
                         <Typography gutterBottom variant="h5" component="h2">
                             {album.title} ({album.songs.length} titles)
                         </Typography>
-                        <Typography variant="span" component="h4">
-                            {info}
+                        <Typography variant="subtitle2" component="span">
+                            {info()}
                         </Typography>
                     </Paper>
+                    <Card elevation={0}>
+                        <Urls urls={album}/>
+                    </Card>
                     <table>
                         <thead>
                         <tr>
@@ -72,21 +71,11 @@ export default function AlbumDetails(props) {
                         </tr>
                         </tbody>
                     </table>
-                    <List className={classes.list}>
-                        {album.availableCountries?.map((countrie, i) => (
-                            <li key={`section-${i}`} className={classes.listSection}>
-                                <a href="#">{countrie}</a>
-                            </li>
-                        ))}
-                    </List>
                 </CardContent>
             </Card>
             <Card elevation={0}>
-                <Urls urls={album}/>
+                <AllSongs album={album}/>
             </Card>
-            <Card elevation={0}>
-                <TabsInfoAlbum album={album}/>
-            </Card>
-        </>
+        </Layout>
     );
 }

@@ -1,4 +1,4 @@
-export default function urls(data){
+export default function urls(data) {
     let result = [
         {
             icon: "/assets/img/allmusic_icon.svg",

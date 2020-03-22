@@ -5,7 +5,7 @@ import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import CardMedia from "@material-ui/core/CardMedia";
-import groupe from "../../../data/mettalica";
+import groupe from "../../../data/groupe";
 import {Link} from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -22,8 +22,16 @@ const useStyles = makeStyles({
 export default function Album(props) {
     const classes = useStyles();
     const album = {...props.album};
-    const cover = album.cover ? album.cover.big : groupe.picture.medium;
-    const info = album.publicationDate ? album.publicationDate : album.length ? album.dateRelease : album.deezerFans + " Fans";
+    const cover = album.cover ? album.cover.medium : groupe.picture.medium;
+    const info = () => {
+        if(album.publicationDate)
+            return album.publicationDate;
+        if(album.dateRelease)
+            return album.dateRelease;
+        if(album.deezerFans)
+            return album.deezerFans;
+        return groupe.name;
+    };
 
     return (
         <Paper variant="outlined">
@@ -36,11 +44,11 @@ export default function Album(props) {
                     />
                 </Link>
                 <CardContent className={classes.cardContent}>
-                    <Typography variant="span" component="p">
+                    <Typography variant="body2" component="div">
                         <Link to={`/album-details-${album._id}`}>{album.title}</Link>
                     </Typography>
-                    <Typography variant="span" component="h6">
-                        {info}
+                    <Typography variant="caption" component="h6">
+                        {info()}
                     </Typography>
                 </CardContent>
             </Card>

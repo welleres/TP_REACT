@@ -2,46 +2,77 @@ import React from "react";
 import "./Groupe.css";
 import Typography from "@material-ui/core/Typography";
 import {Layout} from "./layout/Layout";
-import groupe from "../data/mettalica";
+// import groupe from "../data/groupe";
 import {Card} from "@material-ui/core";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Urls from "./contents/Urls";
 import Members from "./contents/Members";
 import Albums from "./contents/Albums/Albums";
+import Loading from "./contents/Loading";
 
 
 class Groupe extends React.Component {
     state = {
-        newItem: null,
-        hobbies: ["tennis", "foot"]
-    };
-    link = "https://wasabi.i3s.unice.fr/search/artist/";
-
-    addHobby = () => {
-        const {hobbies, newItem} = this.state;
-        hobbies.push(newItem);
-        this.setState({hobbies});
+        url: "https://wasabi.i3s.unice.fr/search/artist/Metallica",
+        groupe: undefined,
+        loading: true
     };
 
-    removeHobby = (hobbyToRemove) => {
-        this.setState(prevState => {
-            const newHobbiesList = prevState.hobbies.filter(
-                hobby => hobby !== hobbyToRemove && hobby
-            );
-            return {hobbies: newHobbiesList};
-        });
+    componentDidMount() {
+        if (this.state.groupe)
+            return;
+        this.getDataFromServer(this.state.url).then();
+    }
+
+    async getDataFromServer(url) {
+        console.log("Getting data from server");
+        fetch(url)
+            .then(response => response.json())
+            .then(reponseJavaScript => {
+                this.setState({
+                    ...this.state,
+                    groupe: reponseJavaScript,
+                    loading: false
+                });
+                console.log(reponseJavaScript);
+                return reponseJavaScript;
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
-    memberNameItem = (memberInfo, i) => {
-        return (
-            <Typography variant="body2" component="span" key={i}>
-                {memberInfo.name}
-            </Typography>
-        );
+    endLoding = () => {
+        console.log('resoudree');
     };
 
     render() {
+        const {groupe, loading} = this.state;
+        if (!groupe)
+            return <Loading open={loading} endListener={this.endLoding}/>;
+
+        let content = (groupInfo) => (
+            <Layout>
+                <Typography gutterBottom variant="h4" component="h2">
+                    {groupInfo.name}
+                </Typography>
+                <Typography variant="subtitle2" color="textSecondary" component="h5">
+                    {groupInfo.genres?.join(" * ")}
+                </Typography>
+                <br/>
+                <Typography variant="subtitle2" color="textPrimary" component="p">
+                    {groupInfo.nameVariations_fold?.join(" - ")}
+                </Typography>
+                <br/>
+                <Members title="All members"/>
+                <hr/>
+                <Typography variant="body2" align={"justify"} color="textSecondary" component="p">
+                    {groupInfo.dbp_abstract}
+                </Typography>
+            </Layout>
+        );
+
         return (
             <Layout>
                 <Card elevation={0}>
@@ -51,22 +82,7 @@ class Groupe extends React.Component {
                         <img src={groupe.picture.medium} alt={groupe.labels.join(", ")}/>
                     </CardMedia>
                     <CardContent>
-                        <Typography gutterBottom variant="h4" component="h2">
-                            {groupe.name}
-                        </Typography>
-                        <Typography variant="span" color="textSecondary" component="h5">
-                            {groupe.genres?.join(" * ")}
-                        </Typography>
-                        <br/>
-                        <Typography variant="body" color="textPrimary" component="p">
-                            {groupe.nameVariations_fold?.join(" - ")}
-                        </Typography>
-                        <br/>
-                        <Members title="All members"/>
-                        <hr/>
-                        <Typography variant="body2" align={"justify"} color="textSecondary" component="p">
-                            {groupe.dbp_abstract}
-                        </Typography>
+                        {content(groupe)}
                     </CardContent>
                 </Card>
                 <Card elevation={0}>

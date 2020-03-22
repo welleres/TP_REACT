@@ -12,6 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import Chip from "@material-ui/core/Chip";
 import Equipements from "./Equipements";
 import Paper from "@material-ui/core/Paper";
+import {Layout} from "../layout/Layout";
 
 export default function MemberInfo(props) {
     const {onClose, opening, member} = props;
@@ -23,9 +24,18 @@ export default function MemberInfo(props) {
     const memberInfo = [member.gender, memberBorn, member.type];
     const memberDate = [member.begin, member.ended ? member.end : 'Now'];
 
+    const subject = () => {
+        return (
+            <Paper elevation={0} variant="outlined" className="memberinfo-subject-paper">
+                <ul>
+                    {member.subject?.map((sub, i) => <li key={i}>{sub}</li>)}
+                </ul>
+            </Paper>
+        );
+    };
 
     return (
-        <>
+        <Layout>
             <Dialog
                 fullWidth={true}
                 maxWidth="md"
@@ -41,13 +51,14 @@ export default function MemberInfo(props) {
                             <Typography color="textPrimary" variant="h5">
                                 <a href={member.urlEquipBoard} target="_blank" rel="noreferrer noopener">{memberName}</a>
                             </Typography>
-                            <Typography component="p" color="textPrimary" variant="span">{memberInfo.join(", ")} * {memberDate.join(" to ")}</Typography>
-                            <Typography color="textPrimary" component="h4" variant="span">{member.instruments?.join(" - ")}</Typography>
+                            <Typography component="p" color="textPrimary" variant="body2">{memberInfo.join(", ")} * {memberDate.join(" to ")}</Typography>
+                            <Typography color="textPrimary" component="p" variant="subtitle2">{member.instruments?.join(" - ")}</Typography>
                         </Grid>
                     </Grid>
-                    <Grid className="member-name-variation" spacing={1}>
-                        <Typography component="div" variant="div">{member.nameVariations?.map((varn) =>
-                            <Chip label={varn} className="member-chip" variant="outlined"/>
+                    <br/>
+                    <Grid container className="member-name-variation" spacing={1}>
+                        <Typography component="div" variant="caption">{member.nameVariations?.map((varn, i) =>
+                            <Chip key={i} label={varn} className="member-chip" variant="outlined"/>
                         )}
                         </Typography>
                     </Grid>
@@ -55,12 +66,8 @@ export default function MemberInfo(props) {
                     <DialogContentText>
                         {member.abstract}
                     </DialogContentText>
-                    <Paper elevation={0} variant="outlined" className="memberinfo-subject-paper">
-                        <ul>
-                            {member.subject?.map((sub, i) =>  <li key={i}>{sub}</li>)}
-                        </ul>
-                    </Paper>
                     <Equipements member={member}/>
+                    {subject()}
                 </DialogContent>
                 <DialogActions>
                     <Grid container spacing={2}>
@@ -69,7 +76,7 @@ export default function MemberInfo(props) {
                     <Button onClick={handleClose} color="primary">Close</Button>
                 </DialogActions>
             </Dialog>
-        </>
+        </Layout>
     );
 }
 

@@ -7,7 +7,6 @@ import PropTypes from "prop-types";
 
 export default function TeamItem(props) {
     const {item} = props;
-
     return (
         <Card className="team-item-card"
               variant="outlined" elevation={0}>
@@ -20,7 +19,7 @@ export default function TeamItem(props) {
                 />
             </a>
             <CardContent>
-                <Typography variant="span" component="h5">
+                <Typography variant="subtitle2" component="h5">
                     <a href={item.url} target="_blank" rel="noopener noreferrer">{item.name}</a>
                 </Typography>
             </CardContent>
