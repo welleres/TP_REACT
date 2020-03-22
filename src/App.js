@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./App.css";
 import {BrowserRouter, Route} from "react-router-dom";
 import Container from "@material-ui/core/Container";
@@ -79,16 +79,25 @@ const useStyles = makeStyles(theme => ({
 
 export default function App(props) {
     const classes = useStyles();
+    const [query, setQuery] = useState(null);
 
     const handleChange = function (event) {
-        props.history.push("/search/" + event.target.value);
+        setQuery(event.target.value);
     };
 
-    function handleKeyPress(event) {
+    const handleKeyPress = (event) => {
         if (event.charCode === 13) {
             console.log("Enter");
         }
-    }
+    };
+
+    const result = () => {
+        if (query) {
+            return <Search name={query}/>
+        } else {
+            return <Route exact path="/" component={Groupe}/>
+        }
+    };
 
     return (
         <div className="App">
@@ -129,7 +138,7 @@ export default function App(props) {
                 <Container maxWidth="md">
                     <Route path="/album/details-:id-:albumId" component={AlbumDetails}/>
                     <Route exact path="/artist/:name" component={Groupe}/>
-                    <Route exact path="/" component={Groupe}/>
+                    {result()}
                 </Container>
                 <Container maxWidth="sm">
                     <Route exact path="/search/:value" component={Search}/>

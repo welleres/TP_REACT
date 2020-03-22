@@ -6,7 +6,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from "@material-ui/core/Divider";
-import Loading from "./contents/Loading";
 import {Link} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
@@ -20,11 +19,15 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function Search() {
+export default function Search(props) {
     const classes = useStyles();
     const [results, setResults] = React.useState({});
+    const {name} = props.name ? props : props.match.params;
 
-    async function find(url) {
+    async function find() {
+        const query = name ? name : 'Metallica';
+        let url = `https://wasabi.i3s.unice.fr/search/fulltext/${query}`;
+        console.log(url);
         fetch(url)
             .then(response => response.json())
             .then(reponseJavaScript => {
@@ -36,7 +39,7 @@ export default function Search() {
     }
 
     useEffect(() => {
-        find("https://wasabi.i3s.unice.fr/search/fulltext/Metallica").then();
+        find().then();
         console.log("Using Effect");
     }, []);
 
