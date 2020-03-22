@@ -43,11 +43,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function Albums(props) {
     const classes = useStyles();
+    const {artistId} = props;
 
     const albumItem = (item, i) => {
         return (
             <Grid item key={i} xs={12} sm={6} md={3}>
-                <Album album={item}/>
+                <Album artistId={artistId} album={item}/>
             </Grid>
         );
     };

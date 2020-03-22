@@ -2,9 +2,9 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
-import groupe from "../../data/groupe";
 import {Layout} from "../layout/Layout";
 import MemberInfo from "./MemberInfo";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -21,6 +21,7 @@ export default function Members(props) {
     const classes = useStyles();
     const [member, setMember] = React.useState({});
     const [open, setOpen] = React.useState(false);
+    const {members} = props;
 
     const handleClickOpen = (e, value) => {
         setOpen(true);
@@ -46,9 +47,13 @@ export default function Members(props) {
     return (
         <Layout>
             <div className={classes.root}>
-                {groupe.members.map(memberInfoItem)}
+                {members.map(memberInfoItem)}
             </div>
             <MemberInfo opening={open} member={member} onClose={handleClose}/>
         </Layout>
     );
 }
+
+Members.propTypes = {
+    members: PropTypes.any.isRequired
+};

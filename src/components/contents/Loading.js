@@ -13,7 +13,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function Loading(props) {
     const classes = useStyles();
-    const {open, endListener} = props;
+    const {open} = props;
+
+    const endListener = () => {
+        console.log("End listener");
+    };
 
     return (
         <>
@@ -26,5 +30,4 @@ export default function Loading(props) {
 
 Loading.propTypes = {
     open: PropTypes.bool.isRequired,
-    endListener: PropTypes.func.isRequired
 };

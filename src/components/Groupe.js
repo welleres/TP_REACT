@@ -2,7 +2,7 @@ import React from "react";
 import "./Groupe.css";
 import Typography from "@material-ui/core/Typography";
 import {Layout} from "./layout/Layout";
-// import groupe from "../data/groupe";
+import artist from "../data/groupe";
 import {Card} from "@material-ui/core";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
@@ -14,20 +14,23 @@ import Loading from "./contents/Loading";
 
 class Groupe extends React.Component {
     state = {
-        url: "https://wasabi.i3s.unice.fr/search/artist/Metallica",
+        url: "https://wasabi.i3s.unice.fr/search/artist/",
         groupe: undefined,
-        loading: true
+        loading: true,
+        query: this.props.match.name
     };
 
     componentDidMount() {
-        if (this.state.groupe)
-            return;
-        this.getDataFromServer(this.state.url).then();
+        this.getDataFromServer().then();
     }
 
-    async getDataFromServer(url) {
-        console.log("Getting data from server");
-        fetch(url)
+    async getDataFromServer() {
+        const {name} = this.props.match.params;
+        const query = name ? name : 'Metallica';
+        console.log(query);
+        const link = this.state.url + query;
+
+        fetch(link)
             .then(response => response.json())
             .then(reponseJavaScript => {
                 this.setState({
@@ -40,17 +43,18 @@ class Groupe extends React.Component {
             })
             .catch((err) => {
                 console.log(err);
+                this.setState({
+                    ...this.state,
+                    groupe: artist,
+                    loading: false
+                })
             });
-    };
-
-    endLoding = () => {
-        console.log('resoudree');
     };
 
     render() {
         const {groupe, loading} = this.state;
         if (!groupe)
-            return <Loading open={loading} endListener={this.endLoding}/>;
+            return <Loading open={loading}/>;
 
         let content = (groupInfo) => (
             <Layout>
@@ -65,7 +69,7 @@ class Groupe extends React.Component {
                     {groupInfo.nameVariations_fold?.join(" - ")}
                 </Typography>
                 <br/>
-                <Members title="All members"/>
+                <Members title="All members" members={groupInfo.members}/>
                 <hr/>
                 <Typography variant="body2" align={"justify"} color="textSecondary" component="p">
                     {groupInfo.dbp_abstract}
@@ -78,8 +82,8 @@ class Groupe extends React.Component {
                 <Card elevation={0}>
                     <CardMedia
                         className="groupe-picture"
-                        title={groupe.labels.join(", ")}>
-                        <img src={groupe.picture.medium} alt={groupe.labels.join(", ")}/>
+                        title={groupe.labels?.join(", ")}>
+                        <img src={groupe.picture?.medium} alt={groupe.labels?.join(", ")}/>
                     </CardMedia>
                     <CardContent>
                         {content(groupe)}
@@ -89,7 +93,7 @@ class Groupe extends React.Component {
                     <Urls urls={groupe}/>
                 </Card>
                 <Card elevation={0}>
-                    <Albums albums={groupe.albums}/>
+                    <Albums artistId={groupe._id} albums={groupe.albums}/>
                 </Card>
             </Layout>
         );

@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 export default function Album(props) {
     const classes = useStyles();
     const album = {...props.album};
-    const cover = album.cover ? album.cover.medium : groupe.picture.medium;
+    const cover = album.cover ? album.cover.medium : groupe.picture?.medium;
     const info = () => {
         if(album.publicationDate)
             return album.publicationDate;
@@ -36,7 +36,7 @@ export default function Album(props) {
     return (
         <Paper variant="outlined">
             <Card elevation={0} className={classes.card}>
-                <Link to={`/album-details-${album._id}`}>
+                <Link to={`/album/details-${props.artistId}-${album._id}`}>
                     <CardMedia
                         component="img"
                         image={cover}
@@ -45,7 +45,7 @@ export default function Album(props) {
                 </Link>
                 <CardContent className={classes.cardContent}>
                     <Typography variant="body2" component="div">
-                        <Link to={`/album-details-${album._id}`}>{album.title}</Link>
+                        <Link to={`/album/details-${props.artistId}-${album._id}`}>{album.title}</Link>
                     </Typography>
                     <Typography variant="caption" component="h6">
                         {info()}
